@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 require 'redmine'
-require 'dispatcher'
 
-Dispatcher.to_prepare :redmine_irc_notifications do
+Rails.configuration.to_prepare do
   require_dependency 'issue'
   unless Issue.included_modules.include? RedmineIrcNotifications::IssuePatch
     Issue.send(:include, RedmineIrcNotifications::IssuePatch)

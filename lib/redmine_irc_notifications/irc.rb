@@ -56,7 +56,7 @@ module RedmineIrcNotifications
                 nickserv_nick = @@nickserv['nick'] || 'NickServ'
 
                 sock.puts "NICK #{random_nick}"
-                sock.puts "PRIVMSG #{nickserv_nick} :GHOST #{@@nick} #{@@nickserv['password']}"
+                sock.puts "NOTICE #{nickserv_nick} :GHOST #{@@nick} #{@@nickserv['password']}"
                 wait_for_nick_to_become_available(sock)
                 sock.puts "NICK #{@@nick}"
               else
@@ -64,7 +64,7 @@ module RedmineIrcNotifications
               end
             end
 
-            sock.puts "PRIVMSG #{@@channel} :#{message}"
+            sock.puts "NOTICE #{@@channel} :#{message}"
           rescue => e
             Rails.logger.error "Error during IRC notification: #{e.message}"
           ensure

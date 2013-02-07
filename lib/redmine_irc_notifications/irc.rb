@@ -47,8 +47,9 @@ module RedmineIrcNotifications
             end
 
             sock = TCPSocket.open(@@server, @@port || 6667)
-            sock.puts "USER #{@@user} 0 * #{@@user}"
             sock.puts "NICK #{@@nick}"
+            sock.puts "USER #{@@user} 0 * #{@@user}"
+            sock.puts "JOIN #{@@channel}"
 
             unless nick_available?(sock)
               if @@nickserv
@@ -65,7 +66,7 @@ module RedmineIrcNotifications
 
             sock.puts "PRIVMSG #{@@channel} :#{message}"
           rescue => e
-            logger.error "Error during IRC notification: #{e.message}"
+            Rails.logger.error "Error during IRC notification: #{e.message}"
           ensure
             if sock
               sock.puts "QUIT"
@@ -116,6 +117,6 @@ module RedmineIrcNotifications
     def self.random_nick(length = 32)
       (0...length).map{65.+(rand(25)).chr}.join
     end
-    
+
   end
 end

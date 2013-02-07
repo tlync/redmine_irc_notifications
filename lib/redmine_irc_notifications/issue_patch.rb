@@ -13,10 +13,8 @@ module RedmineIrcNotifications
       private
       def notify_irc_after_create
         description = RedmineIrcNotifications::Helpers.truncate_words(self.description)
-        RedmineIrcNotifications::IRC.speak "#{self.author.login} created issue \x033#{self.subject}\x03."
-        RedmineIrcNotifications::IRC.speak " Status: \x033#{self.status}\x03"
-        RedmineIrcNotifications::IRC.speak " Assigned: \x033#{self.assigned_to}\x03"
-        RedmineIrcNotifications::IRC.speak " http://#{Setting.host_name}/issues/#{self.id}"
+
+        RedmineIrcNotifications::IRC.speak "#{self.author.login} created issue \x033#{self.subject}\x03. Status: \x033#{self.status}\x03 Assigned: \x033#{self.assigned_to}\x03 http://#{Setting.host_name}/issues/#{self.id}"
       end
     end
   end
